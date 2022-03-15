@@ -53,8 +53,52 @@ let r = test(nums, place, 3);
 	}
 
 	let res = []
-	let r = permutation(res, [1, 2], [], {});
-	res
+	// let r = permutation(res, [1, 2], [], {});
+	// res
+}
+
+{
+	const validState = (state, nums) => {
+		return state.length == nums.length
+	}
+
+	const getCandidates = (state, nums) => {
+		if (state.length == 0) return nums.slice()
+
+		let candidates = []
+		for (n of nums) {
+			if (state.indexOf(n) === -1) 
+			candidates.push(n)
+		}
+
+		return candidates
+	}
+
+	const solve = (nums, state, solutions) => {
+		if (validState(state, nums)) {
+			solutions.push(state.slice())
+		}
+
+		for (let candidate of getCandidates(state, nums)) {
+			if (state.indexOf(candidate) == -1) {
+				state.push(candidate)
+				solve(nums, state, solutions)
+				state.pop()
+			}
+		}
+
+		return solutions
+	}
+
+	const permutation = () => {
+		let solutions = []
+		let nums = [1, 2, 3]
+		let state = []
+
+		return solve(nums, state, solutions)
+	}
+
+	let solutions = permutation();
 }
 
 // stack
@@ -69,8 +113,8 @@ let r = test(nums, place, 3);
 
 /*
 */
-const generateBalancedParentheses = (n) => {
+// const generateBalancedParentheses = (n) => {
 	
-}
+// }
 
-generateBalancedParentheses(Number(2))
+// generateBalancedParentheses(Number(2))
