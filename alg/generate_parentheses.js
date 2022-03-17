@@ -1,35 +1,25 @@
 // backtracking
-let nums = [5, 7, 9]
-let place = []
+let nums = [5, 7, 9];
 
-const notSetNumber = (nums, place) => {
-	for (let n of nums)  {
-		if (place.indexOf(n) === -1) 
-		return n
-	}
-}
+const permutation = (nums, place, solutions) => {
+  if (place.length == nums.length) {
+    solutions.push(place.slice());
+    return;
+  }
 
-const test = (nums, place, placeCount) => {
-	if (place.length == placeCount) {
-		place = place.slice(0, -1)
-		return
-	}
+  for (let [i, n] of Object.entries(nums)) {
+    if (place.indexOf(n) == -1) {
+      n = Number(n);
+      place.push(n);
+      permutation(nums, place, solutions); // sol [[1, 2]]
+      place.pop();
+    }
+  }
 
-	for (let i = 0; i < placeCount; i++) {
-		let p = place[i]
-		if (!p) { // empty seat
-			let n = notSetNumber(nums, place)
-			place.push(n)
-
-			test(nums, place, placeCount)
-		}
-	}
-}
-
-let r = test(nums, place, 3); 
+  return solutions;
+};
 
 {
-
 	const permutation = (res, nums, place, used) => {
 		// goal
 		if (place.length == nums.length) {
