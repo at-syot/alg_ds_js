@@ -101,20 +101,41 @@ let r = test(nums, place, 3);
 	let solutions = permutation();
 }
 
-// stack
+{
+	const validState = (state, goal) => state.length == goal
+	const getCandidates = (state, goal) => {
+		let bound = goal / 2
+		let rmO = bound - state.filter(s => s == '(').length
+		let rmC = bound - state.filter(s => s == ')').length
+		if ((rmC - rmO) == 0)	return ['(']
 
-// pmt([], [1,2], [1,2], {1,2: true}) ;pop; -> res = [[1,2]]
-// pmt([], [1,2], [1,2], {1,2: true}) n=2,rm=nil -> res=[[1,2]],nums=[12],place[1],used={1: true}
-// pmt([], [1,2], [1], {1: true}), n=1,rm=2
+		let candidates = []
+		if (rmO > 0) candidates.push('(')
+		if (rmC > 0 && (rmC - rmO) > 0) candidates.push(')')
+		return candidates
+	}
 
+	const solve = (state, solutions, goal) => {
+		if (validState(state, goal)) {
+			solutions.push(state.slice().join(''))
+		}
 
-// ip = n 
-// goal = parentheses length = n*2 
+		for (c of getCandidates(state, goal)) {
+			state.push(c)
+			solve(state, solutions, goal)
+			state.pop(c)
+		}
 
-/*
-*/
-// const generateBalancedParentheses = (n) => {
-	
-// }
+		return solutions
+	}
 
-// generateBalancedParentheses(Number(2))
+	const generateBalancedParentheses = (n) => {
+		let goal = n * 2
+		let solutions = []
+		let state = []
+		
+		return solve(state, solutions, goal)
+	}
+
+	let r = generateBalancedParentheses(3); r
+}
