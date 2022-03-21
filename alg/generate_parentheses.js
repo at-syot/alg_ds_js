@@ -41,10 +41,6 @@ const permutation = (nums, place, solutions) => {
 			}
 		}
 	}
-
-	let res = []
-	// let r = permutation(res, [1, 2], [], {});
-	// res
 }
 
 {
